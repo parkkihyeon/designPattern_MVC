@@ -19,7 +19,7 @@ public class MainView extends JFrame implements Observer {
 	private JLabel additionLabel2 = new JLabel("원");
 	private JButton calculateButton = new JButton("계산하기");
 	private JTextField calcSolution = new JTextField(10);
-	private JTextArea JtextHistory = new JTextArea() ;
+	private JTextArea JtextHistory = new JTextArea("LOG\n") ;
 	private JScrollPane scrollPane = new JScrollPane(JtextHistory, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 	private JTextArea Jtextshowdb = new JTextArea() ;
 	private JPanel calcPanel = new JPanel();
@@ -30,6 +30,7 @@ public class MainView extends JFrame implements Observer {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(windowX, windowY);
 		setLayout(new BorderLayout());
+		setResizable(false);
 		calcSolution.setEditable(false);
 		JtextHistory.setEditable(false);
 		Jtextshowdb.setEditable(false);

@@ -14,6 +14,8 @@ public class Controller {
 	public Controller(PosModel model, MainView view) {
 		this.model = model;
 		this.view = view;
+		stockView = new StockView() ;
+		stockView.StockButtonListener(new StockHandler()) ;
 		model.registerObserver(view);
 		view.setMainViewListener(new CalculateListener()) ;
 		view.setTestListener(new OrderListener()); 
@@ -21,8 +23,10 @@ public class Controller {
 	}
 
 	public Controller() {
-		this.model = new PosModel();
-		this.view = new MainView();
+		model = new PosModel();
+		view = new MainView();
+		stockView = new StockView() ;
+		stockView.StockButtonListener(new StockHandler()) ;
 		model.registerObserver(view);
 		view.setMainViewListener(new CalculateListener()) ;
 		view.setTestListener(new OrderListener()); 
@@ -59,8 +63,7 @@ public class Controller {
 	private class OrderListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
         	try {
-        		stockView = new StockView() ;
-        		stockView.StockButtonListener(new StockHandler()) ;
+        		stockView.SetGui();
     		} catch (RuntimeException e1) {
     			e1.printStackTrace();
     		}
@@ -76,7 +79,6 @@ public class Controller {
 					model.addStockProduct(productTypde, addNum);
 					stockView.showMessage() ;
 				}
-        		
     		} catch (RuntimeException e1) {
     			e1.printStackTrace();
     		}

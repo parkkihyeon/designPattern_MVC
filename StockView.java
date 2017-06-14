@@ -26,10 +26,9 @@ public class StockView extends JFrame implements Observer {
 	static private Dimension frameSize = frame.getSize() ;
 	static private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize() ;
 	static private JComboBox comboBox = new JComboBox() ;
-
-	static int sibal = 1 ;
 	
-	StockView(){
+	StockView(){}
+	public void SetGui(){
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		frame.setLocation((screenSize.width - frameSize.width)/3, (screenSize.height-frameSize.height)/4);
 		// 프레임을 형성 한 것을 cp 라는 객체에 대입.
