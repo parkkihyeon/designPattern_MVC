@@ -3,27 +3,29 @@ package kihyeon.park;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Controller implements ActionListener {
+import javax.swing.JOptionPane;
+
+public class Controller {
 
 	private PosModel model;
-	private PosView view;
-	private StockProduct nowProduct ;
-
-	public Controller(PosModel model, PosView view) {
+	private MainView view;
+	private StockView stockView;
+	
+	public Controller(PosModel model, MainView view) {
 		this.model = model;
 		this.view = view;
-		nowProduct = null ;
 		model.registerObserver(view);
-		this.view.setPosViewListener(this);
+		view.setMainViewListener(new CalculateListener()) ;
+		view.setTestListener(new OrderListener()); 
 		reFreshGuest();
 	}
 
 	public Controller() {
 		this.model = new PosModel();
-		this.view = new PosView();
-		nowProduct = null ;
+		this.view = new MainView();
 		model.registerObserver(view);
-		this.view.setPosViewListener(this);
+		view.setMainViewListener(new CalculateListener()) ;
+		view.setTestListener(new OrderListener()); 
 		reFreshGuest();
 		System.out.println("controller_post");
 	}
@@ -33,29 +35,51 @@ public class Controller implements ActionListener {
 	}
 
 	public void setNowProduct(StockProduct p) {
-		nowProduct = p ;
+		model.setNowProduct(p);
 		System.out.println("setProduct");
 	}
 	
 	public void reFreshGuest() {
 		setNowProduct(new StockProduct()) ;
-		model.appendHistoryBoard(nowProduct) ;
+		model.appendHistoryBoard() ;
 	}
 	
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		// 1. 이벤트가 발생했을 때,
-		try {
-			//int firstNumber = view.getFirstNumber();
-		//	int price = view.getSecondNumber();
-			// 2. 모델에게 값을 바꾸라고 요청.
-			
-			model.CalculateItem (nowProduct);
-			System.out.println("actionPerformed");
-			reFreshGuest() ;
-		} catch (RuntimeException e) {
-			e.printStackTrace();
+	private class CalculateListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+        	try {
+    			// 2. 모델에게 값을 바꾸라고 요청.	
+    			model.CalculateItem();
+    			reFreshGuest() ;
+    		} catch (RuntimeException e1) {
+    			e1.printStackTrace();
+    		}
+        }
+    }
+	
+	private class OrderListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+        	try {
+        		stockView = new StockView() ;
+        		stockView.StockButtonListener(new StockHandler()) ;
+    		} catch (RuntimeException e1) {
+    			e1.printStackTrace();
+    		}
+        }
+    }
+	
+	private class StockHandler implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			try {
+				int productTypde = stockView.getSelectedItem();
+				int addNum = stockView.getProductAddSize() ;
+				if(addNum > 0 ){
+					model.addStockProduct(productTypde, addNum);
+					stockView.showMessage() ;
+				}
+        		
+    		} catch (RuntimeException e1) {
+    			e1.printStackTrace();
+    		}
 		}
 	}
 }
