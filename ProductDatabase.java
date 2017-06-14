@@ -48,6 +48,7 @@ public class ProductDatabase {
 	static int getWater_price(){return price[product.water.ordinal()] ;}
 	static int getElementPrice(int index){ return price[index] ; }
 	static int getNum_of_product(){return num_of_product ; }
+	static int getPrice(int product) { return price[product] ; }
 	
 	static void Setnum_Icecream(int num) { num_of_item[product.icecream.ordinal()] -= num ; }
 	static void Setnum_Snack(int num) { num_of_item[product.snack.ordinal()] -= num ;}
@@ -56,29 +57,29 @@ public class ProductDatabase {
 	static void Setnum_kimbab(int num) { num_of_item[product.kimbab.ordinal()] -= num ;}
 	static void Setnum_tissue(int num) { num_of_item[product.tissue.ordinal()] -= num ;}
 	static void Setnum_water(int num) { num_of_item[product.water.ordinal()] -= num ;}
-	public static void SetItem(product Item, int num)
+	public static void SetItem(int Item, int num)
 	{
 		switch(Item)
 		{
-		case icecream :
+		case 0 :
 			Setnum_Icecream(num) ;
 			break ;
-		case snack :
+		case 1 :
 			Setnum_Snack(num) ;
 			break ;
-		case gum :
+		case 2 :
 			Setnum_Gum(num) ;
 			break ;
-		case cigarret :
+		case 3 :
 			Setnum_cigarret(num) ;
 			break ;
-		case kimbab :
+		case 4 :
 			Setnum_kimbab(num) ;
 			break ;
-		case tissue :
+		case 5 :
 			Setnum_tissue(num) ;
 			break ;
-		case water :
+		case 6 :
 			Setnum_water(num);
 			break ;
 		}
